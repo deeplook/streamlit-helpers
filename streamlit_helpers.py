@@ -300,7 +300,7 @@ elif converter == "Markdown":
     with col1:
         code = r"""Foo *italics* bar **bold**.
 
-$$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$$
+$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
 """
         with st.expander("Source"):
             text = st.text_area("", value=code, height=300, key=1)
