@@ -34,7 +34,7 @@ from streamlit_folium import folium_static
 # config
 
 st.set_page_config(
-    page_title="Streamlit Converter Collection",
+    page_title="Streamlit Helpers",
     layout="wide",
     initial_sidebar_state="auto",
 )
@@ -42,9 +42,9 @@ st.set_page_config(
 # sidebar
 
 with st.sidebar:
-    st.sidebar.header("Streamlit Converters")
-    # st.sidebar.markdown("Converters")
-    converter = st.radio("Converters",
+    st.sidebar.header("Streamlit Helpers")
+    # st.sidebar.markdown("Helpers")
+    converter = st.radio("Helpers",
         list(sorted(["JSON", "QRcode", 'GraphViz', "GeoJSON", 'Black', "Pygments", "LaTeX", "Regexp", "AST", "Dis", "SVG", "Markdown", "ReST", "PEP-8"])) + ["..."]
     )
     layout = st.radio("Layout",
