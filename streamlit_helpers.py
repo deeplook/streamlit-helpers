@@ -50,6 +50,8 @@ with st.sidebar:
     layout = st.radio("Layout",
         ["Horizontal", "Vertical"]
     )
+    st.sidebar.markdown("About")
+    st.sidebar.markdown("See [code on GitHub](https://github.com/deeplook/streamlit-helpers).")
 
 # main
 
