@@ -15,6 +15,7 @@ import dis
 import io
 import json
 import sys
+from textwrap import dedent
 
 import autopep8
 import black
@@ -30,6 +31,8 @@ from pygments.lexers import PythonLexer
 from pygments.formatters import HtmlFormatter
 from streamlit_folium import folium_static
 
+from link_preview import LinkPreview
+
 
 # config
 
@@ -44,8 +47,8 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Streamlit Helpers")
     # st.sidebar.markdown("Helpers")
-    converter = st.radio("Helpers",
-        list(sorted(["JSON", "QRcode", 'GraphViz', "GeoJSON", 'Black', "Pygments", "LaTeX", "Regexp", "AST", "Dis", "SVG", "Markdown", "ReST", "PEP-8"])) + ["..."]
+    converter = st.radio("",
+        ["Home"] + list(sorted(["JSON", "QRcode", 'GraphViz', "GeoJSON", 'Black', "Pygments", "LaTeX", "Regexp", "AST", "Dis", "SVG", "Markdown", "ReST", "PEP-8", "Link Preview"])) + ["..."]
     )
     layout = st.radio("Layout",
         ["Horizontal", "Vertical"]
@@ -60,11 +63,12 @@ if converter == "GraphViz":
     col1, col2 = st.columns(2)
     with col1:
         sample = """\
-digraph G { bgcolor="purple:pink" label="agraph" fontcolor="white"
-  subgraph cluster1 {fillcolor="blue:cyan" label="acluster" fontcolor="white" style="filled" gradientangle="270"
-		node [shape=box fillcolor="red:yellow" style="filled" gradientangle=90]
-		anode;
-	}
+digraph G {
+  bgcolor="purple:pink" label="agraph" fontcolor="white"
+  subgraph cluster1 {
+    fillcolor="blue:cyan" label="acluster" fontcolor="white" style="filled" gradientangle="270"
+    node [shape=box fillcolor="red:yellow" style="filled" gradientangle=90] anode;
+  }
 }"""
         with st.expander("Input"):
             code = st.text_area("", value=sample, height=300)
@@ -87,6 +91,27 @@ def foo(bar, baz = None) :
             if url:
                 code = requests.get(url).text
             st.text(black.format_str(code, mode=black.FileMode()))
+
+elif converter == "Link Preview":
+    col1, col2 = st.columns(2)
+    with col1:
+        with st.expander("Input"):
+            value = dedent("""\
+            https://www.linkedin.com/posts/simonsinek_all-companies-have-a-goal-they-aim-to-achieve-ugcPost-6876906195769163776-sQz2
+            https://youtu.be/3GvWh3XlJ-0
+            """)
+            urls = st.text_area("URLs", value=value).strip().split("\n")
+            urls = [url for url in urls if url]
+    with col2:
+        with st.expander("Output"):
+            if urls:
+                lp = LinkPreview()
+                st.markdown(lp.css, unsafe_allow_html=True)
+                for url in urls:
+                    lp.process(url)
+                    div = lp.make_preview()
+                    st.markdown(div, unsafe_allow_html=True)
+                st.markdown(lp.javascript, unsafe_allow_html=True)
 
 elif converter == "PEP-8":
     col1, col2 = st.columns(2)
@@ -152,7 +177,7 @@ elif converter == "GeoJSON":
       },
       "properties": {
         "name": "Fred",
-   		"gender": "Male"
+           "gender": "Male"
       }
     },
     {
@@ -163,7 +188,7 @@ elif converter == "GeoJSON":
       },
       "properties": {
         "name": "Martha",
-   		"gender": "Female"
+           "gender": "Female"
       }
     },
     {
@@ -174,7 +199,7 @@ elif converter == "GeoJSON":
       },
       "properties": {
         "name": "Zelda",
-	    "gender": "Female"
+        "gender": "Female"
       }
     }
   ]
@@ -203,7 +228,7 @@ elif converter == "JSON":
       },
       "properties": {
         "name": "Fred",
-   		"gender": "Male"
+           "gender": "Male"
       }
     },
     {
@@ -214,7 +239,7 @@ elif converter == "JSON":
       },
       "properties": {
         "name": "Martha",
-   		"gender": "Female"
+           "gender": "Female"
       }
     },
     {
@@ -225,7 +250,7 @@ elif converter == "JSON":
       },
       "properties": {
         "name": "Zelda",
-	    "gender": "Female"
+        "gender": "Female"
       }
     }
   ]
