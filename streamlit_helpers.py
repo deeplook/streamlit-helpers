@@ -17,6 +17,7 @@ import json
 import sys
 from textwrap import dedent
 
+import astpretty
 import autopep8
 import black
 import docutils.core
@@ -90,7 +91,10 @@ def foo(bar, baz = None) :
         with st.expander("Output"):
             if url:
                 code = requests.get(url).text
-            st.text(black.format_str(code, mode=black.FileMode()))
+            black_code = black.format_str(code, mode=black.FileMode())
+            style = HtmlFormatter().get_style_defs('.highlight')
+            st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
+            st.markdown(highlight(black_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
 
 elif converter == "Link Preview":
     col1, col2 = st.columns(2)
@@ -144,6 +148,11 @@ Only actual code should be reindented.
     with col2:
         with st.expander("Output"):
             st.text(autopep8.fix_code(code))
+            if 0:
+                pep8_code = autopep8.fix_code(sample)
+                style = HtmlFormatter().get_style_defs('.highlight')
+                st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
+                st.markdown(highlight(sample, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
 
 elif converter == "QRcode":
     col1, col2 = st.columns(2)
@@ -269,10 +278,10 @@ elif converter == "Pygments":
 def foo(bar, baz = None) :
     return { 2:42}
 """
-        with st.expander("Python Source"):
+        with st.expander("Source"):
             py_code = st.text_area("", value=sample_code, height=300, key=1)
     with col2:
-        with st.expander("Pygmented Python Source"):
+        with st.expander("Pygmented"):
             style = HtmlFormatter().get_style_defs('.highlight')
             st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
             st.markdown(highlight(py_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
@@ -340,12 +349,12 @@ elif converter == "AST":
 async def f():
     await other_func()
 """
-        with st.expander("Source"):
+        with st.expander("Input (Python)"):
             text = st.text_area("", value=code, height=300, key=1)
     with col2:
         with st.expander("Output"):
-            res = ast.dump(ast.parse(text))
-            st.write(res)
+            res = astpretty.pformat(ast.parse(text), indent="  ")
+            st.markdown(f"<pre>{res}</pre>", unsafe_allow_html=True)
 
 elif converter == "Dis":
     col1, col2 = st.columns(2)
@@ -361,7 +370,8 @@ def foo(dummy):
             f = io.StringIO()
             dis.dis(text, file=f)
             f.seek(0)
-            st.write(f.read())
+            dis_text = f.read()
+            st.markdown(f"<pre>{dis_text}</pre>", unsafe_allow_html=True)
 
 elif converter == "ReST":
     col1, col2 = st.columns(2)
@@ -376,36 +386,38 @@ Foo *italics* bar **bold**.
             html = docutils.core.publish_file(
                 source=io.StringIO(text),
                 settings_overrides={'output_encoding': 'unicode'},
-                writer_name ="html")
+                writer_name="html")
             st.markdown(text, unsafe_allow_html=True)
 
 else:
     st.markdown('More to come...')
-    if layout == "Horizontal":
-        col1, col2 = st.columns(2)
-        with col1:
-            st.markdown("Input")
-            code = ""
-            with st.expander("URL"):
-                url = st.text_input("", value="")
-            with st.expander("File Upload"):
-                uploaded_file = st.file_uploader("Choose a file")
-            with st.expander("Text"):
-                text = st.text_area("", value=code, height=300, key=1)
-        with col2:
-            st.markdown("Output")
-            with st.expander(""):
-                st.markdown("", unsafe_allow_html=True)
-    elif layout == "Vertical":
-        code = "text"
-        st.markdown("Input")
-        code = ""
+    def make_input(code):
         with st.expander("URL"):
             url = st.text_input("", value="")
         with st.expander("File Upload"):
             uploaded_file = st.file_uploader("Choose a file")
         with st.expander("Text"):
             text = st.text_area("", value=code, height=300, key=1)
+        with st.expander("Config"):
+            genre = st.radio("What's your favorite movie genre",
+                 ('Comedy', 'Drama', 'Documentary')
+            )
+            agree = st.checkbox("I agree")
+            values = st.slider("Select a range of values",
+                 0.0, 100.0, (25.0, 75.0)
+            )
+    if layout == "Horizontal":
+        col1, col2 = st.columns(2)
+        with col1:
+            st.markdown("Input")
+            make_input("foo")
+        with col2:
+            st.markdown("Output")
+            with st.expander(""):
+                st.markdown("", unsafe_allow_html=True)
+    elif layout == "Vertical":
+        st.markdown("Input")
+        make_input("foo")
         st.markdown("Output")
         with st.expander(""):
             st.markdown("", unsafe_allow_html=True)
