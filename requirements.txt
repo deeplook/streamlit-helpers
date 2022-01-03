@@ -1,4 +1,4 @@
-astpretty
+astpretty[typed]
 autopep8
 beautifulsoup4
 black
