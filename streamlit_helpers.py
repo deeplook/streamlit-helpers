@@ -33,6 +33,11 @@ from pygments.formatters import HtmlFormatter
 from streamlit_folium import folium_static
 
 from link_preview import LinkPreview
+try:
+    from polly import synthesize_speech
+    HAVE_POLLY = True
+except ImportError:
+    HAVE_POLLY = False
 
 
 # config
@@ -48,8 +53,8 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Streamlit Helpers")
     # st.sidebar.markdown("Helpers")
-    converter = st.radio("",
-        ["Home"] + list(sorted(["JSON", "QRcode", 'GraphViz', "GeoJSON", 'Black', "Pygments", "LaTeX", "Regexp", "AST", "Dis", "SVG", "Markdown", "ReST", "PEP-8", "Link Preview"])) + ["..."]
+    helper = st.radio("",
+        ["Home"] + list(sorted(["JSON", "QRcode", 'GraphViz', "GeoJSON", 'Black', "Pygments", "LaTeX", "Regexp", "AST", "Dis", "SVG", "Markdown", "ReST", "PEP-8", "Link Preview", "Text to Speech"])) + ["..."]
     )
     layout = st.radio("Layout",
         ["Horizontal", "Vertical"]
@@ -59,8 +64,17 @@ with st.sidebar:
 
 # main
 
-st.title(converter)
-if converter == "GraphViz":
+st.title(helper)
+if helper == "Home":
+    st.markdown("""
+    This is an emerging collection of frequently used coding helpers wrapped under
+    a Streamlit interface.
+    
+    This is very rough and ugly, quick and dirty code. Something better is about
+    to emerge from it. Please stay tuned!
+    """)
+
+elif helper == "GraphViz":
     col1, col2 = st.columns(2)
     with col1:
         sample = """\
@@ -77,7 +91,23 @@ digraph G {
         with st.expander("Output"):
             st.graphviz_chart(code, use_container_width=False)
 
-elif converter == "Black":
+elif helper == "Text to Speech":
+    col1, col2 = st.columns(2)
+    with col1:
+        sample = """\
+Hello Text-to-Speech world!
+"""
+        with st.expander("Input"):
+            text = st.text_area("", value=sample, height=300, key=1)
+    with col2:
+        with st.expander("Output"):
+            if HAVE_POLLY:
+                data = synthesize_speech(text, out="output.mp3", voice="Joey", save=False)
+                st.audio(data, format="audio/mp3")
+            else:
+                st.audio(open("missing_polly.mp3", "rb"), format="audio/mp3")
+
+elif helper == "Black":
     col1, col2 = st.columns(2)
     with col1:
         sample = """\
@@ -96,13 +126,14 @@ def foo(bar, baz = None) :
             st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
             st.markdown(highlight(black_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
 
-elif converter == "Link Preview":
+elif helper == "Link Preview":
     col1, col2 = st.columns(2)
     with col1:
         with st.expander("Input"):
             value = dedent("""\
             https://www.linkedin.com/posts/simonsinek_all-companies-have-a-goal-they-aim-to-achieve-ugcPost-6876906195769163776-sQz2
-            https://youtu.be/3GvWh3XlJ-0
+            
+            https://youtu.be/djk159kLBwA0
             """)
             urls = st.text_area("URLs", value=value).strip().split("\n")
             urls = [url for url in urls if url]
@@ -117,7 +148,7 @@ elif converter == "Link Preview":
                     st.markdown(div, unsafe_allow_html=True)
                 st.markdown(lp.javascript, unsafe_allow_html=True)
 
-elif converter == "PEP-8":
+elif helper == "PEP-8":
     col1, col2 = st.columns(2)
     with col1:
         sample = '''\
@@ -154,7 +185,7 @@ Only actual code should be reindented.
                 st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
                 st.markdown(highlight(sample, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
 
-elif converter == "QRcode":
+elif helper == "QRcode":
     col1, col2 = st.columns(2)
     with col1:
         sample_code = "foobar"
@@ -171,7 +202,7 @@ elif converter == "QRcode":
             f.seek(0)
             st.image(f.read())
 
-elif converter == "GeoJSON":
+elif helper == "GeoJSON":
     col1, col2 = st.columns(2)
     with col1:
         code = """\
@@ -222,7 +253,7 @@ elif converter == "GeoJSON":
             folium.GeoJson(json.loads(py_code)).add_to(m)
             folium_static(m)
 
-elif converter == "JSON":
+elif helper == "JSON":
     col1, col2 = st.columns(2)
     with col1:
         code = """\
@@ -271,7 +302,7 @@ elif converter == "JSON":
         with st.expander("Output"):
             st.json(py_code)
 
-elif converter == "Pygments":
+elif helper == "Pygments":
     col1, col2 = st.columns(2)
     with col1:
         sample_code = """\
@@ -286,7 +317,7 @@ def foo(bar, baz = None) :
             st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
             st.markdown(highlight(py_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
 
-elif converter == "LaTeX":
+elif helper == "LaTeX":
     col1, col2 = st.columns(2)
     with col1:
         sample_code = r"""
@@ -299,7 +330,7 @@ a \left(\frac{1-r^{n}}{1-r}\right)
         with st.expander("Output"):
             st.latex(dot_text)
 
-elif converter == "SVG":
+elif helper == "SVG":
     col1, col2 = st.columns(2)
     with col1:
         code = r"""
@@ -329,7 +360,7 @@ elif converter == "SVG":
         with st.expander("Output"):
             st.markdown(svg, unsafe_allow_html=True)
 
-elif converter == "Markdown":
+elif helper == "Markdown":
     col1, col2 = st.columns(2)
     with col1:
         code = r"""Foo *italics* bar **bold**.
@@ -342,11 +373,11 @@ $\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$
         with st.expander("Output"):
             st.markdown(text, unsafe_allow_html=True)
 
-elif converter == "AST":
+elif helper == "AST":
     col1, col2 = st.columns(2)
     with col1:
         code = """\
-async def f():
+async def func():
     await other_func()
 """
         with st.expander("Input (Python)"):
@@ -356,7 +387,7 @@ async def f():
             res = astpretty.pformat(ast.parse(text), indent="  ")
             st.markdown(f"<pre>{res}</pre>", unsafe_allow_html=True)
 
-elif converter == "Dis":
+elif helper == "Dis":
     col1, col2 = st.columns(2)
     with col1:
         code = """\
@@ -373,7 +404,7 @@ def foo(dummy):
             dis_text = f.read()
             st.markdown(f"<pre>{dis_text}</pre>", unsafe_allow_html=True)
 
-elif converter == "ReST":
+elif helper == "ReST":
     col1, col2 = st.columns(2)
     with col1:
         code = """
@@ -391,33 +422,53 @@ Foo *italics* bar **bold**.
 
 else:
     st.markdown('More to come...')
+    def make_config(code):
+        genre = st.radio("What's your favorite movie genre",
+             ('Comedy', 'Drama', 'Documentary')
+        )
+        agree = st.checkbox("I agree")
+        values = st.slider("Select a range of values",
+             0.0, 100.0, (25.0, 75.0)
+        )
+        return [genre, agree, values]
+    text = ""
     def make_input(code):
-        with st.expander("URL"):
-            url = st.text_input("", value="")
-        with st.expander("File Upload"):
+        global text
+        option = st.selectbox("Source",
+            ("Example 1", "Example 2", "URL", "File Upload", "Text"))
+        if option == "Example 1":
+            code = "example 1"
+        elif option == "Example 2":
+            code = "example 2"
+        elif option == "URL":
+            url = st.text_input("Enter URL:", value="")
+            if url:
+                code = requests.get(url).text
+        elif option == "File Upload":
             uploaded_file = st.file_uploader("Choose a file")
-        with st.expander("Text"):
-            text = st.text_area("", value=code, height=300, key=1)
-        with st.expander("Config"):
-            genre = st.radio("What's your favorite movie genre",
-                 ('Comedy', 'Drama', 'Documentary')
-            )
-            agree = st.checkbox("I agree")
-            values = st.slider("Select a range of values",
-                 0.0, 100.0, (25.0, 75.0)
-            )
+            if uploaded_file:
+                stringio = io.StringIO(uploaded_file.getvalue().decode("utf-8"))
+                # st.write(stringio)
+                # To read file as string:
+                code = stringio.read()
+                # st.write(string_data)
+        elif option == "Text":
+            code = ""
+        text = st.text_area("Content", value=code, height=300, key=1)
     if layout == "Horizontal":
         col1, col2 = st.columns(2)
         with col1:
-            st.markdown("Input")
-            make_input("foo")
+            with st.expander("Input"):
+                make_input("")
+            with st.expander("Config"):
+                cfg = make_config("")
         with col2:
-            st.markdown("Output")
-            with st.expander(""):
-                st.markdown("", unsafe_allow_html=True)
+            with st.expander("Output"):
+                st.markdown(text, unsafe_allow_html=True)
     elif layout == "Vertical":
-        st.markdown("Input")
-        make_input("foo")
-        st.markdown("Output")
-        with st.expander(""):
-            st.markdown("", unsafe_allow_html=True)
+        with st.expander("Input"):
+            make_input("")
+        with st.expander("Config"):
+            cfg = make_config("")
+        with st.expander("Output"):
+            st.markdown(text, unsafe_allow_html=True)
