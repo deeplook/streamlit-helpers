@@ -45,7 +45,7 @@ def main():
     elif tool == "Link Preview":
         linkpreview.LinkPreview()()
     elif tool == "PEP-8":
-        pep8.PEP8()()
+        pep8.Pep8()()
     elif tool == "QR Code":
         qrcode.QRcode()()
     elif tool == "Text to Speech":
