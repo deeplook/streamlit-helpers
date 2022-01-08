@@ -43,7 +43,7 @@ def graph1():
 class GraphViz(Tool):
     name = "GraphViz"
     description = """
-    Render text in [GraphViz](https://graphviz.org) [DOT](https://graphviz.org/doc/info/lang.html) format to graphs.
+    Render text in [GraphViz](https://graphviz.org) [DOT](https://graphviz.org/doc/info/lang.html) format as graphs.
     """
 
     def __init__(self):

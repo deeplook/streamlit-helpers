@@ -41,23 +41,22 @@ def main():
     elif tool == "Generic":
         generic.Tool()()
     elif tool == "JSON":
-        if st.session_state.check_updates:
-            this_file = open(__file__).read()
-            repo_url = "https://github.com/deeplook/streamlit-helpers/"
-            url = "https://github.com/deeplook/streamlit-helpers/blob/main/apps/json.py"
-            raw_url = "https://raw.githubusercontent.com/deeplook/streamlit-helpers/main/apps/json.py"
-            repo_file = requests.get(raw_url).text
-            if this_file != repo_file:
-                st.warning(f"**WARNING:** The code you see running here is **not** the [latest one]({url}) in the [repo]({repo_url})!")
-
         json.JSON()()
-        if st.session_state.check_updates:
-            st.write(f"[Source]({url})")
     elif tool == "Link Preview":
         linkpreview.LinkPreview()()
     elif tool == "QR Code":
         qrcode.QRcode()()
     elif tool == "Text to Speech":
+        if st.session_state.check_updates:
+            the_file = open(text2speech.__file__).read()
+            repo_url = "https://github.com/deeplook/streamlit-helpers/"
+            url = "https://github.com/deeplook/streamlit-helpers/blob/main/apps/text2speech.py"
+            raw_url = "https://raw.githubusercontent.com/deeplook/streamlit-helpers/main/apps/text2speech.py"
+            repo_file = requests.get(raw_url).text
+            if the_file != repo_file:
+                st.warning(f"**WARNING:** The code you see running here is **not** the [latest one]({url}) in the [repo]({repo_url})!")
         text2speech.Text2Speech()()
+        if st.session_state.check_updates:
+            st.write(f"[Source]({url})")
 
 main()
