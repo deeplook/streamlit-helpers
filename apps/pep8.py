@@ -50,4 +50,4 @@ Only actual code should be reindented.
         pep8_code = st.text(autopep8.fix_code(self.text))
         style = HtmlFormatter().get_style_defs('.highlight')
         st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
-        st.markdown(highlight(pep8_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
+        st.markdown(highlight(str(pep8_code), PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
