@@ -47,15 +47,17 @@ def main():
     elif tool == "QR Code":
         qrcode.QRcode()()
     elif tool == "Text to Speech":
+        text2speech.Text2Speech()()
         if st.session_state.check_updates:
-            the_file = open(text2speech.__file__).read()
             repo_url = "https://github.com/deeplook/streamlit-helpers/"
             url = "https://github.com/deeplook/streamlit-helpers/blob/main/apps/text2speech.py"
             raw_url = "https://raw.githubusercontent.com/deeplook/streamlit-helpers/main/apps/text2speech.py"
             repo_file = requests.get(raw_url).text
+            the_file = open(text2speech.__file__).read()
             if the_file != repo_file:
                 st.warning(f"**WARNING:** The code you see running here is **not** the [latest one]({url}) in the [repo]({repo_url})!")
-        text2speech.Text2Speech()()
+            else:
+                st.info(f"The code running here was verified right now to be the [latest one]({url}) in the [repo]({repo_url})!")
         if st.session_state.check_updates:
             st.write(f"[Source]({url})")
 
