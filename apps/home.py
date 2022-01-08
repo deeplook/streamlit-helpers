@@ -2,7 +2,7 @@ import streamlit as st
 
 
 def app():
-    st.title("Online Coding Tools")
+    st.title("Online Coding Helpers")
 
     st.markdown(
         """
