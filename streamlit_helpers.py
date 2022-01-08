@@ -19,6 +19,7 @@ with st.sidebar:
     st.session_state.layout = st.radio("Input/Output Orientation",
         ["Horizontal", "Vertical"]
     )
+    st.write("Code Verification")
     st.session_state.verify_code = st.checkbox("Verify code", help="Verify this code is the latest available.")
 
     if 0:
