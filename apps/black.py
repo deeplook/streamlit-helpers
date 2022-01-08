@@ -35,3 +35,4 @@ def foo(bar, baz = None) :
         style = HtmlFormatter().get_style_defs('.highlight')
         st.markdown(f"<style>\n{style}\n</style>", unsafe_allow_html=True)
         st.markdown(highlight(black_code, PythonLexer(), HtmlFormatter()), unsafe_allow_html=True)
+        st.text(black_code)
