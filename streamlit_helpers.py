@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, graphviz, generic, json, linkpreview, pep8, qrcode, text2speech
+from apps import home, ast, awkward, black, dataframes, dis, graphviz, generic, json, linkpreview, pep8, qrcode, rest, svg, text2speech
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "GraphViz", "Generic", "JSON", "Link Preview", "PEP-8", "QR Code", "Text to Speech"]
+        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "Generic", "JSON", "Link Preview", "PEP-8", "QR Code", "ReST", "SVG", "Text to Speech"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -36,6 +36,8 @@ def main():
         black.Black()()
     elif tool == "Dataframe":
         dataframes.Dataframe()()
+    elif tool == "Dis":
+        dis.Dis()()
     elif tool == "GraphViz":
         graphviz.GraphViz()()
     elif tool == "Generic":
@@ -48,6 +50,10 @@ def main():
         pep8.Pep8()()
     elif tool == "QR Code":
         qrcode.QRcode()()
+    elif tool == "ReST":
+        rest.Rest()()
+    elif tool == "SVG":
+        svg.SVG()()
     elif tool == "Text to Speech":
         text2speech.Text2Speech()()
         if st.session_state.verify_code:
