@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, graphviz, generic, json, linkpreview, qrcode, text2speech
+from apps import home, ast, awkward, black, dataframes, graphviz, generic, json, linkpreview, pep8, qrcode, text2speech
 
 
 st.set_page_config(
@@ -44,6 +44,8 @@ def main():
         json.JSON()()
     elif tool == "Link Preview":
         linkpreview.LinkPreview()()
+    elif tool == "PEP-8":
+        pep8.PEP8()()
     elif tool == "QR Code":
         qrcode.QRcode()()
     elif tool == "Text to Speech":
