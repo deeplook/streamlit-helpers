@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, dis, graphviz, generic, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech
+from apps import home, ast, awkward, black, dataframes, dis, graphviz, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "Generic", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text to Speech"]
+        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text to Speech"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -41,8 +41,6 @@ def main():
         dis.Dis()()
     elif tool == "GraphViz":
         graphviz.GraphViz()()
-    elif tool == "Generic":
-        generic.Tool()()
     elif tool == "JSON":
         json.JSON()()
     elif tool == "Link Preview":
