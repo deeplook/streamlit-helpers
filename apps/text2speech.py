@@ -3,6 +3,7 @@ import os
 import streamlit as st
 
 from .generic import Tool
+from .polly import synthesize_speech
 
 
 class Text2Speech(Tool):

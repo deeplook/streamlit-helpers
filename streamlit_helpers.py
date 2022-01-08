@@ -20,9 +20,10 @@ with st.sidebar:
         ["Horizontal", "Vertical"]
     )
     st.session_state.check_updates = st.checkbox("Check for updates")
-    
-    st.sidebar.header("Session State")
-    st.write(st.session_state)
+
+    if 0:
+        st.sidebar.header("Session State")
+        st.write(st.session_state)
 
 def main():    
     if tool == "Home":

@@ -42,4 +42,4 @@ async def func():
             params["type_comments"] = st.session_state.config["type_comments"]
         res = astpretty.pformat(ast.parse(self.text, **params), indent="  ")
         st.markdown(f"<pre>{res}</pre>", unsafe_allow_html=True)
-        st.write(st.session_state)
+        # st.write(st.session_state)

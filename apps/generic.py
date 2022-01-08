@@ -5,7 +5,7 @@ import streamlit as st
 
 class Tool:
     name = "Generic"
-    description = "Some description for the Generic tool..."
+    description = "A dummy tool."
 
     def __init__(self):
         self.text = ""

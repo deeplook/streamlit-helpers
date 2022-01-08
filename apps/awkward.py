@@ -31,4 +31,4 @@ class Awkward(Tool):
         arr = ak.from_json(self.text)
         res = ak.to_json(eval("arr" + expr))
         st.json(res)
-        st.write(res)
+        # st.write(res)
