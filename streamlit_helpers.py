@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "GraphViz", "Generic", "JSON", "Link Preview", "QR Code", "Text to Speech"]
+        ["Home", "AST", "Awkward", "Black", "Dataframe", "GraphViz", "Generic", "JSON", "Link Preview", "PEP-8", "QR Code", "Text to Speech"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
