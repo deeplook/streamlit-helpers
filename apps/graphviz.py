@@ -51,7 +51,8 @@ class GraphViz(Tool):
 
     def make_examples(self):
         return {
-            "Example 1": """\
+            "Example 1": graph1(),
+            "Example 2": """\
 digraph G {
   bgcolor="purple:pink" label="agraph" fontcolor="white"
   subgraph cluster1 {
@@ -59,7 +60,6 @@ digraph G {
     node [shape=box fillcolor="red:yellow" style="filled" gradientangle=90] anode;
   }
 """,
-            "Example 2": graph1(),
         }
 
     def make_config(self):

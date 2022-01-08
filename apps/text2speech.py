@@ -3,11 +3,6 @@ import os
 import streamlit as st
 
 from .generic import Tool
-try:
-    from .polly import synthesize_speech
-    HAVE_POLLY = True
-except ImportError:
-    HAVE_POLLY = False
 
 
 class Text2Speech(Tool):
@@ -67,19 +62,18 @@ Hans Kendra Gabrielle""".split()
 
 
     def make_output(self):
-        if HAVE_POLLY:
-            aws_access_key_id = st.session_state.config["aws_access_key_id"]
-            aws_secret_access_key = st.session_state.config["aws_secret_access_key"]
-            voice = st.session_state.config["voice"]
-            engine = st.session_state.config["engine"]
+        aws_access_key_id = st.session_state.config["aws_access_key_id"]
+        aws_secret_access_key = st.session_state.config["aws_secret_access_key"]
+        voice = st.session_state.config["voice"]
+        engine = st.session_state.config["engine"]
+        if aws_access_key_id and aws_secret_access_key:
             data = synthesize_speech(self.text,
                 out="output.mp3",
                 voice=voice,
                 engine=engine,
-                aws_access_key_id = aws_access_key_id,
-                aws_secret_access_key = aws_secret_access_key,
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
                 save=False)
             st.audio(data, format="audio/mp3")
         else:
-            st.audio(open("missing_polly.mp3", "rb"), format="audio/mp3")
-        st.write(st.session_state)
+            st.error("No AWS credentials provided.")
