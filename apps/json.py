@@ -1,3 +1,4 @@
+import requests
 import streamlit as st
 
 from .generic import Tool
