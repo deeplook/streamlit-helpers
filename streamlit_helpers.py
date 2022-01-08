@@ -19,7 +19,7 @@ with st.sidebar:
     st.session_state.layout = st.radio("Input/Output Orientation",
         ["Horizontal", "Vertical"]
     )
-    st.session_state.check_updates = st.checkbox("Check for updates")
+    st.session_state.verify_code = st.checkbox("CVerify code", help="Verify this code is the latest available.")
 
     if 0:
         st.sidebar.header("Session State")
@@ -48,7 +48,7 @@ def main():
         qrcode.QRcode()()
     elif tool == "Text to Speech":
         text2speech.Text2Speech()()
-        if st.session_state.check_updates:
+        if st.session_state.verify_code:
             repo_url = "https://github.com/deeplook/streamlit-helpers/"
             url = "https://github.com/deeplook/streamlit-helpers/blob/main/apps/text2speech.py"
             raw_url = "https://raw.githubusercontent.com/deeplook/streamlit-helpers/main/apps/text2speech.py"
@@ -58,7 +58,7 @@ def main():
                 st.warning(f"**WARNING:** The code you see running here is **not** the [latest one]({url}) in the [repo]({repo_url})!")
             else:
                 st.info(f"The code running here was verified right now to be the [latest one]({url}) in the [repo]({repo_url})!")
-        if st.session_state.check_updates:
+
             st.write(f"[Source]({url})")
 
 main()
