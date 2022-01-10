@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, dis, graphviz, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech
+from apps import home, ast, awkward, black, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text to Speech"]
+        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -41,6 +41,8 @@ def main():
         dis.Dis()()
     elif tool == "GraphViz":
         graphviz.GraphViz()()
+    elif tool == "Text recognition":
+        text_recognition.TextRecognition()()
     elif tool == "JSON":
         json.JSON()()
     elif tool == "Link Preview":
@@ -55,7 +57,7 @@ def main():
         rest.Rest()()
     elif tool == "SVG":
         svg.SVG()()
-    elif tool == "Text to Speech":
+    elif tool == "Text to speech":
         text2speech.Text2Speech()()
         if st.session_state.verify_code:
             repo_url = "https://github.com/deeplook/streamlit-helpers/"

@@ -10,6 +10,7 @@ graphviz
 html5lib
 numpy
 pandas
+Pillow
 pygments
 qrcode
 requests

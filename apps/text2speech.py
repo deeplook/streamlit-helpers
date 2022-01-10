@@ -10,11 +10,12 @@ class Text2Speech(Tool):
     name = "Text to Speech"
     description = """
     Convert text to speech using the [AWS Polly](https://docs.aws.amazon.com/polly/) cloud service.
+
     This needs AWS credentials. Your credentials are used only temporarily, but are not stored
     anywhere as you can see in the [GitHub repository](https://github.com/deeplook/streamlit-helpers).
     You can also create additional temporary credentials on AWS, and use them here.
     
-    Beware, that some voices support only the "standard", but not the "neural" speech synthesis engine!
+    Beware that some voices support only the "standard", but not the "neural" speech synthesis engine!
     """
 
     def __init__(self):
