@@ -12,7 +12,7 @@ def mark_labels(im: Image, resp: dict, box_color="black"):
     """
     width, height = im.size
     fs = height // 30
-    font = ImageFont.truetype("Helvetica", fs)
+    # font = ImageFont.truetype("Helvetica", fs)
     draw = ImageDraw.Draw(im)
     LTWH = "Left Top Width Height".split()
     lines = []
@@ -25,7 +25,6 @@ def mark_labels(im: Image, resp: dict, box_color="black"):
             geom = td["Geometry"]
             bbox = copy.copy(geom["BoundingBox"])
             poly = geom["Polygon"]
-            # [(p["X"], p["Y"]) for p in poly]
             bbox["Left"] *= width
             bbox["Width"] *= width
             bbox["Top"] *= height
