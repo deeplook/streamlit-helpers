@@ -51,7 +51,7 @@ class Tool:
         elif option == "Text":
             code = ""
         self.text = st.text_area("Content", value=code, height=300, key=1)
-        # st.code(code, language="python")
+
 
     def make_output(self):
         st.markdown(self.text, unsafe_allow_html=True)

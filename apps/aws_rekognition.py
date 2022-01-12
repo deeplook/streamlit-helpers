@@ -32,6 +32,8 @@ def mark_labels(im: Image, resp: dict, box_color="black"):
             l, t, w, h = map(int, [bbox[key] for key in LTWH])
             ## draw.text((l, t - fs), text, fill=box_color, font=font)
             draw.rectangle([(l, t), (l + w, t + h)], outline=box_color)
+            draw.rectangle([(l-1, t-1), (l + w + 1, t + h + 1)], outline=box_color)
+            draw.rectangle([(l-2, t-2), (l + w + 2, t + h + 2)], outline=box_color)
 
 
 def find_text(

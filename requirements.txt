@@ -16,4 +16,5 @@ qrcode
 requests
 scikit-learn
 streamlit
+streamlit-ace
 streamlit-folium
