@@ -3,6 +3,7 @@ autopep8
 awkward
 beautifulsoup4
 black
+branca
 boto3
 docutils
 folium
