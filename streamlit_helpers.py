@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech, translate
+from apps import home, ast, awkward, black, branca, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech, translate
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
+        ["Home", "AST", "Awkward", "Black", "Branca", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -35,6 +35,8 @@ def main():
         awkward.Awkward()()
     elif tool == "Black":
         black.Black()()
+    elif tool == "Branca":
+        branca.app()
     elif tool == "Dataframe":
         dataframes.Dataframe()()
     elif tool == "Dis":
