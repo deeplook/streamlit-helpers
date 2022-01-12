@@ -7,7 +7,7 @@ import streamlit as st
 from PIL import Image
 
 from .generic import Tool
-from .rekognition import find_text
+from .aws_rekognition import find_text
 
 
 class TextRecognition(Tool):

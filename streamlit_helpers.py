@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech
+from apps import home, ast, awkward, black, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech, translate
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech"]
+        ["Home", "AST", "Awkward", "Black", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -26,7 +26,7 @@ with st.sidebar:
         st.sidebar.header("Session State")
         st.write(st.session_state)
 
-def main():    
+def main():
     if tool == "Home":
         home.app()
     elif tool == "AST":
@@ -71,5 +71,7 @@ def main():
                 st.info(f"The code running here was verified right now to be the [latest one]({url}) in the [repo]({repo_url})!")
 
             st.write(f"[Source]({url})")
+    elif tool == "Text translation":
+        translate.TranslateText()()
 
 main()
