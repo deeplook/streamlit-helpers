@@ -1,15 +1,16 @@
 import dis
 import io
 
+import python_minifier
 import streamlit as st
     
 from .generic import Tool
 
 
-class Dis(Tool):
-    name = "Dis"
+class Disassembler(Tool):
+    name = "Disassembler"
     description = """
-    Disassemble Python bytecode into assembly language using the [Disassembler](https://en.wikipedia.org/wiki/Disassembler) in the Python [standard library](https://docs.python.org/3/library/dis.html).
+    Show bytecode generated for Python source code using the [Disassembler](https://en.wikipedia.org/wiki/Disassembler) in the Python [standard library](https://docs.python.org/3/library/dis.html).
     """
 
     def __init__(self):

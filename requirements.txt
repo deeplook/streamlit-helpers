@@ -13,6 +13,7 @@ numpy
 pandas
 Pillow
 pygments
+python-minifier
 qrcode
 requests
 scikit-learn

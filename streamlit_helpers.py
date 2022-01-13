@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, branca, dataframes, dis, graphviz, text_recognition, json, linkpreview, pep8, pygments, qrcode, rest, svg, text2speech, translate
+from apps import home, ast, awkward, black, branca, dataframes, dis, graphviz, text_recognition, json, linkpreview, minify, pep8, pygments, qrcode, rest, svg, text2speech, translate
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Branca", "Dataframe", "Dis", "GraphViz", "JSON", "Link Preview", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
+        ["Home", "AST", "Awkward", "Black", "Branca colormaps", "Dataframe", "Disassembler", "GraphViz", "JSON", "Link Preview", "Minify", "PEP-8", "Pygments", "QR Code", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -35,12 +35,12 @@ def main():
         awkward.Awkward()()
     elif tool == "Black":
         black.Black()()
-    elif tool == "Branca":
+    elif tool == "Branca colormaps":
         branca.app()
     elif tool == "Dataframe":
         dataframes.Dataframe()()
-    elif tool == "Dis":
-        dis.Dis()()
+    elif tool == "Disassembler":
+        dis.Disassembler()()
     elif tool == "GraphViz":
         graphviz.GraphViz()()
     elif tool == "Text recognition":
@@ -49,6 +49,8 @@ def main():
         json.JSON()()
     elif tool == "Link Preview":
         linkpreview.LinkPreview()()
+    elif tool == "Minify":
+        minify.Minify()()
     elif tool == "PEP-8":
         pep8.Pep8()()
     elif tool == "Pygments":
