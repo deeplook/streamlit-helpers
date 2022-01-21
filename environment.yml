@@ -1,0 +1,30 @@
+name: streamlit-helpers
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - astpretty[typed]
+    - autopep8
+    - awkward
+    - beautifulsoup4
+    - black
+    - branca
+    - boto3
+    - docutils
+    - folium
+    - graphviz
+    - html5lib
+    - numpy
+    - pandas
+    - Pillow
+    - pygments
+    - python-minifier
+    - qrcode
+    - requests
+    - scikit-learn
+    - streamlit
+    - streamlit-ace
+    - streamlit-folium
+  - pyzbar
