@@ -52,6 +52,7 @@ class QRdecode(Tool):
         st.session_state.config = dict()
 
     def make_output(self):
-        codes = decode(self.im)
-        for code in codes:
-            st.text(code.data.decode("utf-8"))
+        if self.im:
+            codes = decode(self.im)
+            for code in codes:
+                st.text(code.data.decode("utf-8"))
