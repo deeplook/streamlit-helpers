@@ -7,9 +7,9 @@ from .generic import Tool
 
 
 class QRcode(Tool):
-    name = "QR Code"
+    name = "QR Encode"
     description = """
-    Convert simple text to a [QR code](https://en.wikipedia.org/wiki/QR_code).
+    Encode text to a [QR code](https://en.wikipedia.org/wiki/QR_code).
     """
 
     def __init__(self):
