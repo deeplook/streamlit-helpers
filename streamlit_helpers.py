@@ -1,7 +1,7 @@
 import requests
 import streamlit as st
 
-from apps import home, ast, awkward, black, branca, dataframes, dis, graphviz, text_recognition, json, linkpreview, minify, pep8, pygments, qrcode, qrcode_decode, rest, svg, text2speech, translate
+from apps import home, ast, awkward, black, branca, dataframes, dis, graphviz, hashes, text_recognition, json, linkpreview, minify, pep8, pygments, qrcode, qrcode_decode, rest, svg, text2speech, translate
 
 
 st.set_page_config(
@@ -13,7 +13,7 @@ st.set_page_config(
 with st.sidebar:
     st.sidebar.header("Menu")
     tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Branca colormaps", "Dataframe", "Disassembler", "GraphViz", "JSON", "Link Preview", "Minify", "PEP-8", "Pygments", "QR Encode", "QR Decode", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
+        ["Home", "AST", "Awkward", "Black", "Branca colormaps", "Dataframe", "Disassembler", "GraphViz", "Hashes", "JSON", "Link Preview", "Minify", "PEP-8", "Pygments", "QR Encode", "QR Decode", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
@@ -43,6 +43,8 @@ def main():
         dis.Disassembler()()
     elif tool == "GraphViz":
         graphviz.GraphViz()()
+    elif tool == "Hashes":
+        hashes.Hashes()()
     elif tool == "Text recognition":
         text_recognition.TextRecognition()()
     elif tool == "JSON":
