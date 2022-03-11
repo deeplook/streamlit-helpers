@@ -41,5 +41,6 @@ async def func():
         if py_version >= [3, 8, 0]:
             params["type_comments"] = st.session_state.config["type_comments"]
         res = astpretty.pformat(ast.parse(self.text, **params), indent="  ")
-        st.markdown(f"<pre>{res}</pre>", unsafe_allow_html=True)
+        # st.markdown(f"<pre>{res}</pre>", unsafe_allow_html=True)
+        st.write(res)
         # st.write(st.session_state)
