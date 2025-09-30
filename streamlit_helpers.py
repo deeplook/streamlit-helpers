@@ -12,8 +12,9 @@ st.set_page_config(
 
 with st.sidebar:
     st.sidebar.header("Menu")
-    tool = st.selectbox("",
-        ["Home", "AST", "Awkward", "Black", "Branca colormaps", "Dataframe", "Disassembler", "GraphViz", "Hashes", "JSON", "Link Preview", "Minify", "PEP-8", "Pygments", "QR Encode", "QR Decode", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"]
+    tool = st.selectbox("Select a tool",
+        ["Home", "AST", "Awkward", "Black", "Branca colormaps", "Dataframe", "Disassembler", "GraphViz", "Hashes", "JSON", "Link Preview", "Minify", "PEP-8", "Pygments", "QR Encode", "QR Decode", "ReST", "SVG", "Text recognition", "Text to speech", "Text translation"],
+        label_visibility='collapsed'
     )
     st.sidebar.header("Settings")
     st.session_state.layout = st.radio("Input/Output Orientation",
